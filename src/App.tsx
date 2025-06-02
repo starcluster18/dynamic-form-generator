@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ConfigEditor from './components/ConfigEditor';
 import FormRenderer from './components/FormRenderer';
+import ErrorModal from './components/ErrorModal';
 import { FormConfig } from './types/FormConfig';
 import './App.css';
 
@@ -24,13 +25,16 @@ const App: React.FC = () => {
   const [tab, setTab] = useState<'config' | 'result'>('config');
   const [config, setConfig] = useState<FormConfig | null>(null);
   const [configText, setConfigText] = useState<string>(defaultJson);
+  const [error, setError] = useState<string | null>(null);
 
   const handleApply = (text: string) => {
     try {
       const parsed = JSON.parse(text);
       setConfig(parsed);
       setTab('result');
+      setError(null);
     } catch {
+      setError('Invalid JSON. Please check your format.');
     }
   };
 
@@ -51,6 +55,7 @@ const App: React.FC = () => {
 
       {tab === 'result' && config && <FormRenderer config={config} />}
 
+      {error && <ErrorModal message={error} onClose={() => setError(null)} />}
     </div>
   );
 };
