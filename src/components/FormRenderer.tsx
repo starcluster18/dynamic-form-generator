@@ -11,16 +11,18 @@ const FormRenderer: React.FC<Props> = ({ config }) => {
     <div className="form-result">
       <h2>{config.title || 'Dynamic Form'}</h2>
       <form>
-        {config.items.map((field, index) => (
+        {config.items?.map((field, index) => (
           <FormField key={index} field={field} />
         ))}
-        <div className="button-row" style={{ marginTop: 20 }}>
-          {(config.buttons || [{ label: 'Submit' }]).map((btn, i) => (
-            <button key={i} type="button" style={{ marginRight: 10 }}>
-              {btn.label}
-            </button>
-          ))}
-        </div>
+        {Array.isArray(config.buttons) && config.buttons.length > 0 && (
+          <div className="button-row">
+            {config.buttons.map((btn, i) => (
+              <button key={i} type="button">
+                {btn.label}
+              </button>
+            ))}
+          </div>
+        )}
       </form>
     </div>
   );

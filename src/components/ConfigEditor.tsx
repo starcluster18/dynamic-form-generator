@@ -7,6 +7,7 @@ interface Props {
 }
 
 const ConfigEditor: React.FC<Props> = ({ value, onChange, onApply }) => {
+
   return (
     <div className="form-editor">
       <textarea
@@ -14,7 +15,7 @@ const ConfigEditor: React.FC<Props> = ({ value, onChange, onApply }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-      <div style={{ textAlign: 'right' }}>
+      <div className='apply-button'>
         <button onClick={() => onApply(value)}>Apply</button>
       </div>
     </div>
